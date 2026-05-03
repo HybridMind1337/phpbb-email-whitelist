@@ -1,0 +1,22 @@
+services:
+    hybridmind.emailwhitelist.domain_manager:
+        class: hybridmind\emailwhitelist\service\domain_manager
+        arguments:
+            - '@config'
+
+    hybridmind.emailwhitelist.log_repository:
+        class: hybridmind\emailwhitelist\service\log_repository
+        arguments:
+            - '@dbal.conn'
+            - '%core.table_prefix%'
+
+    hybridmind.emailwhitelist.listener:
+        class: hybridmind\emailwhitelist\event\listener
+        arguments:
+            - '@config'
+            - '@user'
+            - '@request'
+            - '@hybridmind.emailwhitelist.domain_manager'
+            - '@hybridmind.emailwhitelist.log_repository'
+        tags:
+            - { name: event.listener }

@@ -1,0 +1,130 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_EMAILWHITELIST_TITLE}</h1>
+<p>{L_ACP_EMAILWHITELIST_EXPLAIN}</p>
+
+<form id="hm_emailwhitelist" method="post" action="{U_ACTION}">
+    <fieldset>
+        <legend>{L_ACP_EMAILWHITELIST_SETTINGS}</legend>
+
+        <dl>
+            <dt><label for="enabled">{L_ACP_EMAILWHITELIST_ENABLE}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_ENABLE_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" class="radio" name="enabled" value="1"<!-- IF S_ENABLED --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" class="radio" name="enabled" value="0"<!-- IF not S_ENABLED --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="allowed_domains">{L_ACP_EMAILWHITELIST_ALLOWED_DOMAINS}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_ALLOWED_DOMAINS_EXPLAIN}</span></dt>
+            <dd><textarea id="allowed_domains" name="allowed_domains" rows="10" cols="60">{ALLOWED_DOMAINS}</textarea></dd>
+        </dl>
+
+        <dl>
+            <dt><label for="show_domains">{L_ACP_EMAILWHITELIST_SHOW_DOMAINS}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_SHOW_DOMAINS_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" class="radio" name="show_domains" value="1"<!-- IF S_SHOW_DOMAINS --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" class="radio" name="show_domains" value="0"<!-- IF not S_SHOW_DOMAINS --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="error_message">{L_ACP_EMAILWHITELIST_ERROR_MESSAGE}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_ERROR_MESSAGE_EXPLAIN}</span></dt>
+            <dd><textarea id="error_message" name="error_message" rows="4" cols="60">{ERROR_MESSAGE}</textarea></dd>
+        </dl>
+    </fieldset>
+
+    <fieldset>
+        <legend>{L_ACP_EMAILWHITELIST_LOGGING}</legend>
+
+        <dl>
+            <dt><label for="log_enabled">{L_ACP_EMAILWHITELIST_LOG_ENABLE}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_LOG_ENABLE_EXPLAIN}</span></dt>
+            <dd>
+                <label><input type="radio" class="radio" name="log_enabled" value="1"<!-- IF S_LOG_ENABLED --> checked="checked"<!-- ENDIF -->> {L_YES}</label>
+                <label><input type="radio" class="radio" name="log_enabled" value="0"<!-- IF not S_LOG_ENABLED --> checked="checked"<!-- ENDIF -->> {L_NO}</label>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt><label for="store_mode">{L_ACP_EMAILWHITELIST_STORE_MODE}{L_COLON}</label><br><span>{L_ACP_EMAILWHITELIST_STORE_MODE_EXPLAIN}</span></dt>
+            <dd>
+                <select id="store_mode" name="store_mode">
+                    <option value="none"<!-- IF S_STORE_NONE --> selected="selected"<!-- ENDIF -->>{L_ACP_EMAILWHITELIST_STORE_NONE}</option>
+                    <option value="masked"<!-- IF S_STORE_MASKED --> selected="selected"<!-- ENDIF -->>{L_ACP_EMAILWHITELIST_STORE_MASKED}</option>
+                    <option value="full"<!-- IF S_STORE_FULL --> selected="selected"<!-- ENDIF -->>{L_ACP_EMAILWHITELIST_STORE_FULL}</option>
+                </select>
+            </dd>
+        </dl>
+    </fieldset>
+
+    <fieldset class="submit-buttons">
+        <input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}">
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+
+<h2>{L_ACP_EMAILWHITELIST_STATS}</h2>
+<div class="stat-block">
+    <p><strong>{L_ACP_EMAILWHITELIST_TOTAL_BLOCKED}{L_COLON}</strong> {TOTAL_BLOCKED}</p>
+    <p><strong>{L_ACP_EMAILWHITELIST_TODAY_BLOCKED}{L_COLON}</strong> {TODAY_BLOCKED}</p>
+    <p><strong>{L_ACP_EMAILWHITELIST_LAST_7_DAYS_BLOCKED}{L_COLON}</strong> {LAST_7_DAYS_BLOCKED}</p>
+</div>
+
+<h2>{L_ACP_EMAILWHITELIST_TOP_DOMAINS}</h2>
+<!-- IF S_HAS_TOP_DOMAINS -->
+<table class="table1 zebra-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_EMAILWHITELIST_DOMAIN}</th>
+            <th>{L_ACP_EMAILWHITELIST_ATTEMPTS}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- BEGIN top_domains -->
+        <tr>
+            <td>{top_domains.DOMAIN}</td>
+            <td>{top_domains.ATTEMPTS}</td>
+        </tr>
+        <!-- END top_domains -->
+    </tbody>
+</table>
+<!-- ELSE -->
+<p>{L_ACP_EMAILWHITELIST_NO_STATS}</p>
+<!-- ENDIF -->
+
+<h2>{L_ACP_EMAILWHITELIST_LATEST_ATTEMPTS}</h2>
+<!-- IF S_HAS_LATEST_ATTEMPTS -->
+<table class="table1 zebra-table">
+    <thead>
+        <tr>
+            <th>{L_ACP_EMAILWHITELIST_EMAIL}</th>
+            <th>{L_ACP_EMAILWHITELIST_DOMAIN}</th>
+            <th>{L_ACP_EMAILWHITELIST_IP}</th>
+            <th>{L_ACP_EMAILWHITELIST_DATE}</th>
+            <th>{L_ACP_EMAILWHITELIST_USER_AGENT}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- BEGIN latest_attempts -->
+        <tr>
+            <td>{latest_attempts.EMAIL}</td>
+            <td>{latest_attempts.DOMAIN}</td>
+            <td>{latest_attempts.IP}</td>
+            <td>{latest_attempts.DATE}</td>
+            <td>{latest_attempts.USER_AGENT}</td>
+        </tr>
+        <!-- END latest_attempts -->
+    </tbody>
+</table>
+
+<form id="hm_emailwhitelist_clear" method="post" action="{U_ACTION}">
+    <fieldset class="submit-buttons">
+        <input class="button2" type="submit" name="clear_logs" value="{L_ACP_EMAILWHITELIST_CLEAR_LOGS}" onclick="return confirm('{LA_ACP_EMAILWHITELIST_CLEAR_LOGS_CONFIRM}');">
+        {S_FORM_TOKEN}
+    </fieldset>
+</form>
+<!-- ELSE -->
+<p>{L_ACP_EMAILWHITELIST_NO_LOGS}</p>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->
